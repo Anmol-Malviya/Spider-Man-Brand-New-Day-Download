@@ -1,5 +1,4 @@
 'use client';
-import { useEffect, useRef } from 'react';
 
 const AD_CONFIGS = {
   leaderboard: { key: 'c559f3554f8963dcd2d4cf4fcfd07475', width: 728, height: 90 },
@@ -11,49 +10,28 @@ const AD_CONFIGS = {
 };
 
 export default function AdBanner({ type = 'leaderboard' }) {
-  const containerRef = useRef(null);
   const config = AD_CONFIGS[type] || AD_CONFIGS.leaderboard;
 
-  useEffect(() => {
-    if (!containerRef.current || typeof window === 'undefined') return;
-
-    // Clear existing children
-    containerRef.current.innerHTML = '';
-
-    // Create wrapper
-    const iframeWrap = document.createElement('div');
-    iframeWrap.style.margin = '0 auto';
-    iframeWrap.style.width = `${config.width}px`;
-    iframeWrap.style.height = `${config.height}px`;
-
-    // Inject iframe script
-    const scriptConf = document.createElement('script');
-    scriptConf.type = 'text/javascript';
-    scriptConf.innerHTML = `
-      atOptions = {
-        'key' : '${config.key}',
-        'format' : 'iframe',
-        'height' : ${config.height},
-        'width' : ${config.width},
-        'params' : {}
-      };
-    `;
-
-    const scriptInvoke = document.createElement('script');
-    scriptInvoke.type = 'text/javascript';
-    scriptInvoke.src = `https://www.highperformanceformat.com/${config.key}/invoke.js`;
-    scriptInvoke.async = true;
-
-    iframeWrap.appendChild(scriptConf);
-    iframeWrap.appendChild(scriptInvoke);
-    containerRef.current.appendChild(iframeWrap);
-  }, [type, config.key, config.width, config.height]);
+  const adHtml = `
+    <div style="width: ${config.width}px; height: ${config.height}px; margin: 0 auto; overflow: hidden;">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '${config.key}',
+          'format' : 'iframe',
+          'height' : ${config.height},
+          'width' : ${config.width},
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="https://www.highperformanceformat.com/${config.key}/invoke.js"></script>
+    </div>
+  `;
 
   if (type === 'sticky-bottom') {
     return (
       <div className="sticky-bottom-ad" id="sticky-bottom-ad">
         <div className="ad-label">Advertisement</div>
-        <div className="ad-inner" ref={containerRef} />
+        <div className="ad-inner" dangerouslySetInnerHTML={{ __html: adHtml }} />
       </div>
     );
   }
@@ -62,7 +40,7 @@ export default function AdBanner({ type = 'leaderboard' }) {
     return (
       <div className="sticky-sidebar-ad" id="sticky-sidebar-ad">
         <div className="ad-label">Sponsored</div>
-        <div ref={containerRef} />
+        <div dangerouslySetInnerHTML={{ __html: adHtml }} />
       </div>
     );
   }
@@ -70,7 +48,7 @@ export default function AdBanner({ type = 'leaderboard' }) {
   return (
     <div className="ad-strip">
       <div className="ad-label">Advertisement</div>
-      <div className="ad-inner" ref={containerRef} />
+      <div className="ad-inner" dangerouslySetInnerHTML={{ __html: adHtml }} />
     </div>
   );
 }
