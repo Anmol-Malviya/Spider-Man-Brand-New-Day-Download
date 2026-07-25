@@ -1,8 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
+import TrailerModal from './TrailerModal';
 
-export default function HeroSection({ movie, onOpenTrailer }) {
+export default function HeroSection({ movie }) {
   const [downloadsCount, setDownloadsCount] = useState(0);
+  const [trailerOpen, setTrailerOpen] = useState(false);
 
   useEffect(() => {
     let start = 0;
@@ -32,77 +34,86 @@ export default function HeroSection({ movie, onOpenTrailer }) {
   };
 
   return (
-    <section className="hero" id="home">
-      <div className="hero-bg">
-        <img
-          src={movie.heroPoster}
-          alt={`${movie.title} (${movie.year}) – Official Poster`}
-          className="hero-poster"
-          width="1920"
-          height="1080"
-          loading="eager"
-        />
-        <div className="hero-overlay"></div>
-        <div className="hero-gradient"></div>
-      </div>
-
-      <div className="hero-content">
-        <div className="hero-badge-group">
-          <span className="badge badge-red">{movie.year}</span>
-          <span className="badge badge-blue">{movie.contentRating}</span>
-          <span className="badge badge-gold">MARVEL STUDIOS</span>
-          <span className="badge badge-green">4K UHD AVAILABLE</span>
+    <>
+      <section className="hero" id="home">
+        <div className="hero-bg">
+          <img
+            src={movie.heroPoster}
+            alt={`${movie.title} (${movie.year}) – Official Poster`}
+            className="hero-poster"
+            width="1920"
+            height="1080"
+            loading="eager"
+          />
+          <div className="hero-overlay"></div>
+          <div className="hero-gradient"></div>
         </div>
 
-        <h1 className="hero-title">
-          <span className="title-spider">{movie.title.split(':')[0]}</span>
-          {movie.title.includes(':') && <span className="title-colon">:</span>}
-          {movie.title.includes(':') && <span className="title-sub">{movie.title.split(':')[1]}</span>}
-        </h1>
-
-        <div className="hero-meta">
-          <span className="meta-item">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            {movie.rating} / 10 IMDb
-          </span>
-          <span className="meta-sep">•</span>
-          <span className="meta-item">⏱ {movie.duration}</span>
-          <span className="meta-sep">•</span>
-          <span className="meta-item">🎬 {movie.genres.join(' / ')}</span>
-          <span className="meta-sep">•</span>
-          <span className="meta-item">🌐 {movie.languages[0]}</span>
-        </div>
-
-        <p className="hero-desc">{movie.synopsis}</p>
-
-        <div className="hero-actions">
-          <a href="#download" className="btn-primary" id="btn-download-hero">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h5.66V9h3.84L12 2z"/></svg>
-            Download HD Movie
-          </a>
-          <button className="btn-secondary" onClick={onOpenTrailer}>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Watch Official Trailer
-          </button>
-        </div>
-
-        <div className="hero-stats">
-          <div className="stat-item">
-            <span className="stat-num">{formatStats(downloadsCount)}</span>
-            <span className="stat-label">Verified Downloads</span>
+        <div className="hero-content">
+          <div className="hero-badge-group">
+            <span className="badge badge-red">{movie.year}</span>
+            <span className="badge badge-blue">{movie.contentRating}</span>
+            <span className="badge badge-gold">MARVEL STUDIOS</span>
+            <span className="badge badge-green">⚡ 4K UHD AVAILABLE</span>
           </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-num">98%</span>
-            <span className="stat-label">Positive Reviews</span>
+
+          <h1 className="hero-title">
+            <span className="title-spider">{movie.title.split(':')[0]}</span>
+            {movie.title.includes(':') && <span className="title-colon">:</span>}
+            {movie.title.includes(':') && <span className="title-sub">{movie.title.split(':')[1]}</span>}
+          </h1>
+
+          <div className="hero-meta">
+            <span className="meta-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {movie.rating} / 10 IMDb
+            </span>
+            <span className="meta-sep">•</span>
+            <span className="meta-item">⏱ {movie.duration}</span>
+            <span className="meta-sep">•</span>
+            <span className="meta-item">🎬 {movie.genres.join(' / ')}</span>
+            <span className="meta-sep">•</span>
+            <span className="meta-item">🌐 {movie.languages[0]}</span>
           </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-num">2.1M+</span>
-            <span className="stat-label">Fans Worldwide</span>
+
+          <p className="hero-desc">{movie.synopsis}</p>
+
+          <div className="hero-actions">
+            <a href="#download" className="btn-primary" id="btn-download-hero">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h5.66V9h3.84L12 2z"/></svg>
+              Download HD Movie
+            </a>
+            <button className="btn-secondary" onClick={() => setTrailerOpen(true)}>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Watch Official Trailer
+            </button>
+          </div>
+
+          <div className="hero-stats">
+            <div className="stat-item">
+              <span className="stat-num">{formatStats(downloadsCount)}</span>
+              <span className="stat-label">Verified Downloads</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <span className="stat-num">98%</span>
+              <span className="stat-label">Positive Reviews</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <span className="stat-num">2.1M+</span>
+              <span className="stat-label">Fans Worldwide</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <TrailerModal
+        active={trailerOpen}
+        onClose={() => setTrailerOpen(false)}
+        movieTitle={movie.title}
+        trailerStill={movie.closeUpStill}
+      />
+    </>
   );
 }
