@@ -23,9 +23,8 @@ export default function DownloadBufferPage({ params, searchParams }) {
   }, [countdown]);
 
   const handleFinalDownload = () => {
-    // Open high-cpm sponsor link in new tab and start file delivery
-    window.open('https://www.effectivecpmnetwork.com/m7hiy0iy?key=25f00e1a64d4d651a8db1aacbc325784', '_blank');
-    alert(`Starting legal high-speed download for ${movie.title} (${quality})`);
+    // Open high-CPM sponsor link from user options
+    window.open('https://www.effectivecpmnetwork.com/hynjy9kyjm?key=d79d5e67146f8c6aa8ae54c1d4dd92e4', '_blank');
   };
 
   return (
