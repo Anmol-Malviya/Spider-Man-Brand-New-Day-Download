@@ -1299,22 +1299,184 @@ button {
   font-size: 1.02rem;
 }
 
-/* CPM Ad Placements */
+/* Exit Intent Overlay Modal & Native Ad Formatting */
+.exit-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 4, 6, 0.92);
+  backdrop-filter: blur(14px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.35s ease;
+}
+
+.exit-overlay-modal {
+  background: radial-gradient(circle at top, rgba(26, 32, 50, 0.98), rgba(15, 18, 28, 0.98));
+  border: 1px solid var(--accent-red-glow);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 70px rgba(230, 57, 70, 0.45), 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 640px) {
+  .exit-overlay-modal {
+    padding: 1.8rem 1.2rem;
+    max-width: 100%;
+  }
+}
+
+.exit-overlay-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.exit-overlay-close:hover {
+  background: var(--accent-red);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.exit-overlay-icon {
+  font-size: 2.8rem;
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  animation: floatSpider 2.5s infinite ease-in-out;
+}
+
+.exit-overlay-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-family: var(--font-display);
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.exit-overlay-desc {
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  margin: 0.6rem 0 1.5rem;
+}
+
+.exit-native-ad-wrap {
+  margin-bottom: 1.5rem;
+  min-height: 120px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.exit-overlay-cta {
+  width: 100%;
+  padding: 1rem 1.8rem;
+  background: linear-gradient(135deg, var(--accent-red), #b71c1c);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 0 25px var(--accent-red-glow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.exit-overlay-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px var(--accent-red-glow);
+  background: linear-gradient(135deg, var(--accent-red-bright), var(--accent-red));
+}
+
+/* Deep Overrides for Injected Native Ad Networks & Widgets */
+.exit-native-ad-wrap [id^="container-"],
+.exit-native-ad-wrap div,
+[id^="container-c478a6953c267be35bc882437059e47e"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Fix squished native ad items & small text clipping */
+.exit-native-ad-wrap a,
+.exit-native-ad-wrap div,
+.exit-native-ad-wrap span,
+.exit-native-ad-wrap p,
+[id^="container-c478a6953c267be35bc882437059e47e"] a,
+[id^="container-c478a6953c267be35bc882437059e47e"] span {
+  font-size: 0.88rem !important;
+  line-height: 1.35 !important;
+  font-weight: 600 !important;
+  color: #f1f5f9 !important;
+  text-align: center !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+  text-overflow: clip !important;
+}
+
+/* Ensure native ad images render with rounded corners & clean fit */
+.exit-native-ad-wrap img,
+[id^="container-c478a6953c267be35bc882437059e47e"] img {
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 0.3s ease !important;
+  object-fit: cover !important;
+}
+
+.exit-native-ad-wrap a:hover img,
+[id^="container-c478a6953c267be35bc882437059e47e"] a:hover img {
+  transform: scale(1.05) !important;
+}
+
+/* Enhanced CPM Ad Banner Containers & Legibility */
 .ad-strip {
   text-align: center;
-  margin: 3rem 0;
-  padding: 1.2rem;
-  background: rgba(15, 18, 28, 0.5);
-  border-top: 1px dashed var(--border-color);
-  border-bottom: 1px dashed var(--border-color);
+  margin: 3.5rem 0;
+  padding: 1.5rem 1rem;
+  background: rgba(15, 18, 28, 0.65);
+  border-top: 1px dashed rgba(255, 215, 0, 0.3);
+  border-bottom: 1px dashed rgba(255, 215, 0, 0.3);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .ad-label {
-  font-size: 0.72rem;
-  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent-gold);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.ad-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .sticky-bottom-ad {
@@ -1322,37 +1484,40 @@ button {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(6, 7, 10, 0.96);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--border-color);
-  padding: 0.6rem;
+  background: rgba(6, 7, 10, 0.98);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--accent-gold);
+  padding: 0.75rem 0.5rem;
   z-index: 999;
   text-align: center;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
 }
 
 .sticky-sidebar-ad {
   position: fixed;
-  top: 120px;
+  top: 110px;
   right: 15px;
-  width: 160px;
-  height: 600px;
-  background: rgba(15, 18, 28, 0.85);
-  border: 1px solid var(--border-color);
+  width: 170px;
+  height: 620px;
+  background: rgba(15, 18, 28, 0.9);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-md);
   z-index: 90;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;
-  backdrop-filter: blur(10px);
+  padding: 0.75rem 0.5rem;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 35px rgba(230, 57, 70, 0.25);
 }
 
 @media (max-width: 1350px) {
   .sticky-sidebar-ad { display: none; }
 }
 
-/* Footer */
+/* Footer & Global Small Text Legibility Overrides */
 .footer {
-  background: rgba(4, 5, 8, 0.96);
+  background: rgba(4, 5, 8, 0.98);
   border-top: 1px solid var(--border-color);
   padding: 4.5rem 0 2.5rem;
   position: relative;
@@ -1367,7 +1532,11 @@ button {
   margin-bottom: 2.2rem;
 }
 
-.footer-tagline { color: var(--text-muted); }
+.footer-tagline {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
 
 .footer-divider {
   height: 1px;
@@ -1377,12 +1546,14 @@ button {
 
 .footer-bottom {
   text-align: center;
-  color: var(--text-dim);
-  font-size: 0.88rem;
-  line-height: 1.65;
+  color: #94a3b8;
+  font-size: 0.92rem;
+  line-height: 1.7;
 }
 
 .footer-disclaimer {
-  margin-top: 0.6rem;
-  color: #ef4444;
+  margin-top: 0.8rem;
+  color: #f87171;
+  font-weight: 600;
+  font-size: 0.92rem;
 }
